@@ -1,0 +1,19 @@
+---
+planet.earth:
+  description:
+    - "Earth - P2X-3YZ"
+  member:
+    - pao
+    - yul
+
+yul:
+  description:
+    - Montréal
+  member:
+    - yul.developers
+
+pao:
+  description:
+    - Mountain View and Palo Alto
+  member:
+    - pao.developers

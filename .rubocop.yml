@@ -1,0 +1,57 @@
+Style/RaiseString:
+  Enabled: true
+
+Style/TestMethodCall:
+  Enabled: true
+
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+
+Layout/MultilineOperationIndentation:
+  EnforcedStyle: indented
+
+Style/NegatedIf:
+  Enabled: false
+
+Layout/AlignParameters:
+  EnforcedStyle: with_fixed_indentation
+
+Layout/SpaceAroundOperators:
+  AllowForAlignment: false
+
+Style/SignalException:
+  EnforcedStyle: only_raise
+
+Layout/IndentHash:
+  EnforcedStyle: consistent
+
+Metrics/LineLength:
+  Max: 120
+
+Style/CollectionMethods:
+  Enabled: true
+  PreferredMethods:
+    collect: 'map'
+    collect!: 'map!'
+    inject: 'reduce'
+    inject!: 'reduce!'
+    detect: 'find'
+    find_all: 'select'
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Metrics/ModuleLength:
+  Max: 150
+
+Metrics/MethodLength:
+  Max: 35
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Max: 10
+
+Naming/UncommunicativeMethodParamName:
+  Enabled: false
