@@ -29,21 +29,52 @@ Just declare the following environment variables.
 Displays the actions to be executed to bring remote in sync with local.
 
 ```shell
-ldap-group-manager diff ./my-directory-data --verify-users
+$ ldap-group-manager diff --verify-users
+[2018-09-07T16:01:00.001-04:00] INFO: Compiling all local groups
+[2018-09-07T16:02:00.002-04:00] INFO: Compiling local users
+[2018-09-07T16:03:00.003-04:00] INFO: Verifying 67 local users against remote
+[2018-09-07T16:04:00.004-04:00] INFO: Compiling remote groups
+[2018-09-07T16:05:00.005-04:00] INFO: Operations to perform
+{
+    :operations => {
+        :create => [],
+        :modify => [
+            [0] {
+                    :cn => "yul",
+                :attrib => :description,
+                 :value => [
+                    [0] "Montreal"
+                ]
+            },
+            [1] {
+                    :cn => "yul.managers",
+                :attrib => :member,
+                 :value => [
+                    [0] "Keyser Soze",
+                    [1] "Walter White",
+                    [2] "Victor Von Doom"
+                ]
+            }
+        ],
+        :delete => [
+            [0] "yul.qa"
+        ]
+    }
+}
 ```
 
 ### apply
 
 Applies the changes required to bring the remote state in sync with local.
 
+```shell
+ldap-group-manager apply
+```
+
 ### Global flags
 
 - `--verify-users` ensures every locally declared user exists on the
   remote server. It takes forever to do... be forewarned.
-
-```shell
-ldap-group-manager apply ./my-directory-data
-```
 
 ## Contributing
 
