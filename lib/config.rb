@@ -49,18 +49,26 @@ module AdGear::Infrastructure::GroupManager::Config
     newobj
   end
 
+  # List all organizational groups defined in local configuration.
+  # @since 0.1.0
   def list_org_groups
     GLOBAL_CONFIG[:data][:organizational]
   end
 
+  # List all organizational groups defined in local configuration.
+  # @since 0.1.0
   def list_perm_groups
     GLOBAL_CONFIG[:data][:permissions]
   end
 
+  # List all location groups defined in local configuration.
+  # @since 0.1.0
   def list_locations
     GLOBAL_CONFIG[:data][:locations]
   end
 
+  # List all users defined in local configuration.
+  # @since 0.1.0
   def list_users
     users = []
     list_all_groups.each do |_k, v|

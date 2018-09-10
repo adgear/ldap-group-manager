@@ -11,9 +11,7 @@ module AdGear::Infrastructure::GroupManager::Utils
 
   module_function
 
-  # A helper method that allows to log an error and exit.
-  # @param [Array] args passes all arguments, as is, to Ougai.
-  # @return [nil] no return.
+  # A helper method that converts all symbol keys to string keys.
   # @since 0.1.0
   def stringify_all_keys(hash)
     stringified_hash = {}
@@ -23,6 +21,8 @@ module AdGear::Infrastructure::GroupManager::Utils
     stringified_hash
   end
 
+  # A helper method that converts all string keys to symbol keys.
+  # @since 0.1.0
   def symbolify_all_keys(hash)
     Log.debug(msg: 'symbolifiying', data: hash)
     symbolified = {}
@@ -33,10 +33,14 @@ module AdGear::Infrastructure::GroupManager::Utils
     symbolified
   end
 
+  # I don't remember what this does
+  # @since 0.1.0
   def diff_op_exist?(ops, type, target)
     ops.select { |op| op[0] == type && op[1] == target }.any?
   end
 
+  # Checks if the reverse operation exists
+  # @since 0.1.0
   def duplicate?(ops, item)
     opposite = case item[0]
                when '-'
@@ -47,18 +51,22 @@ module AdGear::Infrastructure::GroupManager::Utils
     ops.select { |op| op[0] == opposite && op[1] == item[1] && op[2] == item[2] }.any?
   end
 
-  def find_ou(dn)
-    if GLOBAL_CONFIG[:data][:organizational].key?(dn)
+  # Finds in which OU a given CN can be found.
+  # @since 0.1.0
+  def find_ou(cn)
+    if GLOBAL_CONFIG[:data][:organizational].key?(cn)
       'OU=Organizational, OU=Keycloak Groups'
-    elsif GLOBAL_CONFIG[:data][:permissions].key?(dn)
+    elsif GLOBAL_CONFIG[:data][:permissions].key?(cn)
       'OU=Permission, OU=Keycloak Groups'
-    elsif GLOBAL_CONFIG[:data][:locations].key?(dn)
+    elsif GLOBAL_CONFIG[:data][:locations].key?(cn)
       'OU=Location, OU=Keycloak Groups'
     else
       'OU=Keycloak Users'
     end
   end
 
+  # Sorts the member array bundle of groups.
+  # @since 0.1.0
   def sort_member(all_groups)
     ordered_groups = {}
     all_groups.keys.sort.each do |group|
@@ -72,6 +80,8 @@ module AdGear::Infrastructure::GroupManager::Utils
     ordered_groups
   end
 
+  # Creates the list of operations to perform to synchronize local with remote.
+  # @since 0.1.0
   def create_ops_list(local_groups, remote_groups)
     operations = {
       create: [],
@@ -112,6 +122,8 @@ module AdGear::Infrastructure::GroupManager::Utils
     operations
   end
 
+  # A helper method that compares two objects, accounting for LDAP idiosyncracies.
+  # @since 0.1.0
   def compare_attributes(local, remote)
     (local == [] ? nil : local) != remote
   end

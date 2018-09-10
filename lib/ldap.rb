@@ -26,6 +26,8 @@ module AdGear::Infrastructure::GroupManager::LDAP
 
   module_function
 
+  # Fetches a given item by CN.
+  # @since 0.1.0
   def get_item(cn, location)
     treebase = GLOBAL_CONFIG['treebase']
 
@@ -46,7 +48,9 @@ module AdGear::Infrastructure::GroupManager::LDAP
     hash
   end
 
-  def item_exists?(dn)
+  # Verifies that a given user exists.
+  # @since 0.1.0
+  def user_exists?(dn)
     treebase = GLOBAL_CONFIG['treebase']
 
     filter_string = ["distinguishedName=CN=#{dn}"]
@@ -57,6 +61,9 @@ module AdGear::Infrastructure::GroupManager::LDAP
     Binder.search(base: treebase, filter: filter).any?
   end
 
+  # Modifies or creates an item.
+  # This is shoddily written and modify and create should be split.
+  # @since 0.1.0
   def set_item(action, dn, attrib = nil, val = nil)
     if action == :modify
       if attrib == :member && !val.nil?
@@ -86,12 +93,16 @@ module AdGear::Infrastructure::GroupManager::LDAP
     end
   end
 
+  # Deletes an item. Kerplow!
+  # @since 0.1.0
   def delete_item(dn)
     Binder.delete(dn: dn)
     result = Binder.get_operation_result
     Log.debug(msg: 'Trying to delete item', result: result, dn: dn)
   end
 
+  # Lists organizational units in the remote instance.
+  # @since 0.1.0
   def list_organizational_units
     treebase = GLOBAL_CONFIG['treebase']
 
@@ -104,7 +115,9 @@ module AdGear::Infrastructure::GroupManager::LDAP
     result.empty? ? raise('No valid OUs found') : result
   end
 
-  def get_groups(treebase)
+  # Lists all groups in the remote instance.
+  # @since 0.1.0
+  def list_groups(treebase)
     filter = Net::LDAP::Filter.construct('(objectClass=group)')
 
     result = {}
@@ -128,18 +141,26 @@ module AdGear::Infrastructure::GroupManager::LDAP
     result.empty? ? raise('No results') : result
   end
 
+  # Lists all organizational groups in the remote instance.
+  # @since 0.1.0
   def list_org_groups
-    get_groups(list_organizational_units.select { |g| g.match?(/^OU=Organizational/) }.first)
+    list_groups(list_organizational_units.select { |g| g.match?(/^OU=Organizational/) }.first)
   end
 
+  # Lists all permissions groups in the remote instance.
+  # @since 0.1.0
   def list_perm_groups
-    get_groups(list_organizational_units.select { |g| g.match?(/^OU=Permission/) }.first)
+    list_groups(list_organizational_units.select { |g| g.match?(/^OU=Permission/) }.first)
   end
 
+  # Lists all location groups in the remote instance.
+  # @since 0.1.0
   def list_locations
-    get_groups(list_organizational_units.select { |g| g.match?(/^OU=Location/) }.first)
+    list_groups(list_organizational_units.select { |g| g.match?(/^OU=Location/) }.first)
   end
 
+  # Lists all groups groups in the remote instance.
+  # @since 0.1.0
   def list_all_groups
     groups = {}
     groups.merge!(list_org_groups)
@@ -148,6 +169,8 @@ module AdGear::Infrastructure::GroupManager::LDAP
     groups
   end
 
+  # Extracts the CN out of a full DN.
+  # @since 0.1.0
   def extract_cn(dn)
     dn.split(',').select { |p| p.match(/^CN=/) }.first.gsub('CN=', '')
   end

@@ -8,9 +8,8 @@ module AdGear
   # Container within the AdGear space for infrastructure related tools.
   # @since 0.1.0
   module Infrastructure
-    # RRPasswd
-    # A root password rotator designed to interact with different storage
-    # backends.
+    # GroupManager
+    # A Ruby gem that pushes group memberships to LDAP.
     # @since 0.1.0
     module GroupManager
       require_relative('config')
@@ -21,7 +20,7 @@ module AdGear
       require('hashdiff')
       require('thor')
 
-      # GroupManager
+      # App
       # The top of stack abstraction for this application.
       # Read through the code to check the sequence of events.
       # @since 0.1.0
@@ -44,7 +43,7 @@ module AdGear
         class_option :verify_users, desc: 'Verifies that locally defined users exist remotely', type: :boolean
 
         desc 'diff', 'displays the difference between local and remote'
-        # Displays the fidderence between local and remote
+        # Displays the difference between local and remote
         # @since 0.1.0
         def diff
           # get all local groups
