@@ -8,6 +8,7 @@ module AdGear::Infrastructure::GroupManager::Config
   include AdGear::Infrastructure::GroupManager::Logging
 
   # The global config instance
+  # rubocop:disable Style/MutableConstant
   GLOBAL_CONFIG = {
     data: {
       locations: {},
@@ -23,6 +24,7 @@ module AdGear::Infrastructure::GroupManager::Config
   GLOBAL_CONFIG['local_state'] = ENV['AG_LOCAL_STATE'] || Dir.pwd
 
   GLOBAL_CONFIG.freeze
+  # rubocop:enable Style/MutableConstant
 
   config_files = Dir.glob(File.join(GLOBAL_CONFIG['local_state'], '**/*.yml'))
 
