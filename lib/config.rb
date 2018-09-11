@@ -2,7 +2,6 @@
 # @since 0.1.0
 module AdGear::Infrastructure::GroupManager::Config
   require('yaml')
-  require('deep_fetch')
   require_relative('logging')
 
   include AdGear::Infrastructure::GroupManager::Logging

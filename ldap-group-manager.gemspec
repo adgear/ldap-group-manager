@@ -11,4 +11,8 @@ Gem::Specification.new do |s|
   s.executables = ['ldap-group-manager']
   s.licenses = ['MIT']
   s.homepage = 'https://www.github.com/adgear/ldap-group-manager'
+  s.add_dependency('net-ldap', '~> 0.16.1')
+  s.add_dependency('ougai', '~> 1.7')
+  s.add_dependency('thor', '~> 0.20.0')
+  s.add_dependency('awesome_print')
 end
