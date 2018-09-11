@@ -7,9 +7,14 @@ module AdGear::Infrastructure::GroupManager::Logging
   require('ougai')
 
   # The global logging instance
-  Log = Ougai::Logger.new(STDERR)
+  if ENV['AG_LOG_FORMAT'] =~ /json/i
+    Log = Ougai::Logger.new(STDOUT)
+  else
+    Log = Ougai::Logger.new(STDERR)
+    Log.formatter = Ougai::Formatters::Readable.new
+  end
+
   Log.level = ENV['LOG_LEVEL'] || 'info'
-  Log.formatter = Ougai::Formatters::Readable.new
 
   module_function
 
