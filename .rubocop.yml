@@ -1,9 +1,3 @@
-Style/RaiseString:
-  Enabled: true
-
-Style/TestMethodCall:
-  Enabled: true
-
 Style/StringLiterals:
   EnforcedStyle: single_quotes
 
