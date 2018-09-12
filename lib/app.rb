@@ -1,5 +1,13 @@
 # frozen_string_literal: true
 
+require_relative('config')
+require_relative('logging')
+require_relative('ldap')
+require_relative('utils')
+require_relative('version')
+require('hashdiff')
+require('thor')
+
 # AdGear
 # Top level container
 # @since 0.1.0
@@ -12,14 +20,6 @@ module AdGear
     # A Ruby gem that pushes group memberships to LDAP.
     # @since 0.1.0
     module GroupManager
-      require_relative('config')
-      require_relative('logging')
-      require_relative('ldap')
-      require_relative('utils')
-      require_relative('version')
-      require('hashdiff')
-      require('thor')
-
       # App
       # The top of stack abstraction for this application.
       # Read through the code to check the sequence of events.
