@@ -33,17 +33,19 @@ module AdGear
 
         package_name 'groupmanager'
 
-        map %w[--version -v] => :__print_version
+        map %w[--version -v] => :print_version
 
+        # Displays the gem's version when invoked in the CLI.
+        # @since 0.1.0
         desc '--version, -v', 'print the version'
-        def __print_version
+        def print_version
           puts GEM_VERSION
         end
 
         class_option :verify_users, desc: 'Verifies that locally defined users exist remotely', type: :boolean
 
         desc 'diff', 'displays the difference between local and remote'
-        # Displays the difference between local and remote
+        # Displays the difference between local and remote.
         # @since 0.1.0
         def diff
           # get all local groups
