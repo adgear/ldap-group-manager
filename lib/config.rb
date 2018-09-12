@@ -26,6 +26,7 @@ module AdGear::Infrastructure::GroupManager::Config
   # rubocop:enable Style/MutableConstant
 
   config_files = Dir.glob(File.join(GLOBAL_CONFIG[:local_state], '**/*.yml'))
+  Log.fatal('No configuration files detected') if config_files.empty?
 
   config_files.each do |file|
     Log.debug("loading #{file}")
