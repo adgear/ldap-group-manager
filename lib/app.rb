@@ -86,7 +86,7 @@ module AdGear
           ops_to_perform[:create].each do |cn|
             LDAP.set_item(
               :create,
-              ["cn=#{cn}", Utils.find_ou(cn), GLOBAL_CONFIG['treebase']].join(', ')
+              ["cn=#{cn}", Utils.find_ou(cn), GLOBAL_CONFIG[:treebase]].join(', ')
             )
           end
 
@@ -95,7 +95,7 @@ module AdGear
             LDAP.set_item(
               :modify, ["cn=#{i[:cn]}",
                         Utils.find_ou(i[:cn]),
-                        GLOBAL_CONFIG['treebase']].join(', '), i[:attrib], i[:value]
+                        GLOBAL_CONFIG[:treebase]].join(', '), i[:attrib], i[:value]
                       )
           end
 
@@ -103,7 +103,7 @@ module AdGear
             Log.info("Removing #{ops_to_perform[:delete].length} deprecated items")
 
             items_to_delete = ops_to_perform[:delete].map do |i|
-              treebase = GLOBAL_CONFIG['treebase']
+              treebase = GLOBAL_CONFIG[:treebase]
 
               filter = Net::LDAP::Filter.construct("CN=#{i}*")
 

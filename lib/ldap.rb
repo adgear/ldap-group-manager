@@ -12,7 +12,7 @@ module AdGear::Infrastructure::GroupManager::LDAP
   include AdGear::Infrastructure::GroupManager::Logging
   include AdGear::Infrastructure::GroupManager::Utils
 
-  Binder = Net::LDAP.new host: GLOBAL_CONFIG['ldap_host'],
+  Binder = Net::LDAP.new host: GLOBAL_CONFIG[:ldap_host],
                          port: 636,
                          encryption: {
                            method: :simple_tls,
@@ -20,8 +20,8 @@ module AdGear::Infrastructure::GroupManager::LDAP
                          },
                          auth: {
                            method: :simple,
-                           username: GLOBAL_CONFIG['user_dn'],
-                           password: GLOBAL_CONFIG['password']
+                           username: GLOBAL_CONFIG[:user_dn],
+                           password: GLOBAL_CONFIG[:password]
                          }
 
   module_function
@@ -29,7 +29,7 @@ module AdGear::Infrastructure::GroupManager::LDAP
   # Fetches a given item by CN.
   # @since 0.1.0
   def get_item(cn, location)
-    treebase = GLOBAL_CONFIG['treebase']
+    treebase = GLOBAL_CONFIG[:treebase]
 
     filter_string = ["distinguishedName=CN=#{cn}"]
     filter_string << location if location
@@ -51,7 +51,7 @@ module AdGear::Infrastructure::GroupManager::LDAP
   # Verifies that a given user exists.
   # @since 0.1.0
   def user_exists?(dn)
-    treebase = GLOBAL_CONFIG['treebase']
+    treebase = GLOBAL_CONFIG[:treebase]
 
     filter_string = ["distinguishedName=CN=#{dn}"]
     filter_string << 'OU=Keycloak Users'
@@ -71,7 +71,7 @@ module AdGear::Infrastructure::GroupManager::LDAP
           [
             "cn=#{m}",
             AdGear::Infrastructure::GroupManager::Utils.find_ou(m),
-            AdGear::Infrastructure::GroupManager::GLOBAL_CONFIG['treebase']
+            AdGear::Infrastructure::GroupManager::GLOBAL_CONFIG[:treebase]
           ].join(', ')
         end
         Binder.replace_attribute(dn, attrib, val)
@@ -104,7 +104,7 @@ module AdGear::Infrastructure::GroupManager::LDAP
   # Lists organizational units in the remote instance.
   # @since 0.1.0
   def list_organizational_units
-    treebase = GLOBAL_CONFIG['treebase']
+    treebase = GLOBAL_CONFIG[:treebase]
 
     result = []
 

@@ -16,16 +16,16 @@ module AdGear::Infrastructure::GroupManager::Config
     }
   }
 
-  GLOBAL_CONFIG['user_dn'] = ENV['AG_USER_DN'] || nil
-  GLOBAL_CONFIG['password'] = ENV['AG_PASSWORD'] || nil
-  GLOBAL_CONFIG['ldap_host'] = ENV['AG_LDAP_HOST'] || nil
-  GLOBAL_CONFIG['treebase'] = ENV['AG_TREEBASE'] || nil
-  GLOBAL_CONFIG['local_state'] = ENV['AG_LOCAL_STATE'] || Dir.pwd
+  GLOBAL_CONFIG[:user_dn] = ENV['AG_USER_DN'] || nil
+  GLOBAL_CONFIG[:password] = ENV['AG_PASSWORD'] || nil
+  GLOBAL_CONFIG[:ldap_host] = ENV['AG_LDAP_HOST'] || nil
+  GLOBAL_CONFIG[:treebase] = ENV['AG_TREEBASE'] || nil
+  GLOBAL_CONFIG[:local_state] = ENV['AG_LOCAL_STATE'] || Dir.pwd
 
   GLOBAL_CONFIG.freeze
   # rubocop:enable Style/MutableConstant
 
-  config_files = Dir.glob(File.join(GLOBAL_CONFIG['local_state'], '**/*.yml'))
+  config_files = Dir.glob(File.join(GLOBAL_CONFIG[:local_state], '**/*.yml'))
 
   config_files.each do |file|
     Log.debug("loading #{file}")
