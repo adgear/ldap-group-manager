@@ -5,7 +5,6 @@ require_relative('logging')
 require_relative('ldap')
 require_relative('utils')
 require_relative('version')
-require('hashdiff')
 require('thor')
 
 # AdGear
