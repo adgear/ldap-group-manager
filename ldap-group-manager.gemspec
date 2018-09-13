@@ -1,9 +1,12 @@
+require_relative('lib/version')
+include AdGear::Infrastructure::GroupManager::Version
+
 Gem::Specification.new do |s|
   s.name = 'ldap-group-manager'
   s.authors = [
     'Alexis Vanier'
   ]
-  s.version = '0.1.0'
+  s.version = GEM_VERSION
   s.date = '2018-08-07'
   s.summary = 'Manage ldap group membership as flat files'
   s.files = Dir.glob('{bin,lib}/**/*') + %w[LICENSE README.md Gemfile]
