@@ -70,7 +70,7 @@ module AdGear::Infrastructure::GroupManager::LDAP
         val.map! do |m|
           [
             "cn=#{m}",
-            Utils.find_ou(m),
+            AdGear::Infrastructure::GroupManager::Utils.find_ou(m),
             GLOBAL_CONFIG[:treebase]
           ].join(', ')
         end
