@@ -70,8 +70,8 @@ module AdGear::Infrastructure::GroupManager::LDAP
         val.map! do |m|
           [
             "cn=#{m}",
-            AdGear::Infrastructure::GroupManager::Utils.find_ou(m),
-            AdGear::Infrastructure::GroupManager::GLOBAL_CONFIG[:treebase]
+            Utils.find_ou(m),
+            GLOBAL_CONFIG[:treebase]
           ].join(', ')
         end
         Binder.replace_attribute(dn, attrib, val)
