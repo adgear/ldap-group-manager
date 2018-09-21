@@ -61,7 +61,7 @@ module AdGear
           # get all local users and check if they exist remotely
           if options[:verify_users]
             Log.info("Verifying #{users.length} local users against remote")
-            users.each { |dn| LDAP.item_exists?(dn) ? Log.debug("#{dn} exists") : raise("#{dn} does not exist") }
+            users.each { |dn| LDAP.user_exists?(dn) ? Log.debug("#{dn} exists") : raise("#{dn} does not exist") }
           end
 
           # get all remote groups
