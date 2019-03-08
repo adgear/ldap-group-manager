@@ -15,6 +15,7 @@ module AdGear
           data: {
             locations: {},
             organizational: {},
+            functional: {},
             permissions: {}
           }
         }
@@ -28,7 +29,8 @@ module AdGear
         GLOBAL_CONFIG.freeze
         # rubocop:enable Style/MutableConstant
 
-        config_files = Dir.glob(File.join(GLOBAL_CONFIG[:local_state], '**/*.yml'))
+        config_files = Dir.glob(File.join(GLOBAL_CONFIG[:local_state], '**/*.{yaml,yml}'))
+        Log.trace(config_files)
         Log.fatal('No configuration files detected') if config_files.empty?
 
         config_files.each do |file|
@@ -62,6 +64,12 @@ module AdGear
         # @since 0.1.0
         def list_perm_groups
           GLOBAL_CONFIG[:data][:permissions]
+        end
+
+        # List all funcitonal groups defined in local configuration
+        # @since 1.0.0
+        def list_func_groups
+          GLOBAL_CONFIG[:data][:functional]
         end
 
         # List all location groups defined in local configuration.
