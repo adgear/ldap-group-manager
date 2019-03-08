@@ -125,10 +125,13 @@ module AdGear::Infrastructure::GroupManager::LDAP
     Log.debug(msg: 'base and filter', base: treebase, filter: filter.to_s)
 
     Binder.search(base: treebase, filter: filter) do |entry|
+      Log.trace('Dumping binder entry', entry)
+
       obj = {}
 
       entry.each do |k, v|
         next unless [:member].include?(k)
+        Log.trace('dumping key, values', k: k, v: v)
         obj[k] = v.map { |p| extract_cn(p) }.sort
       end
 
@@ -138,13 +141,20 @@ module AdGear::Infrastructure::GroupManager::LDAP
     end
 
     Binder.get_operation_result
-    result.empty? ? raise('No results') : result
+    Log.error("No results for #{treebase}") if result.empty?
+    result
   end
 
   # Lists all organizational groups in the remote instance.
   # @since 0.1.0
   def list_org_groups
     list_groups(list_organizational_units.select { |g| g.match?(/^OU=Organizational/) }.first)
+  end
+
+  # Lists all functional groups in the remote instance.
+  # @since 1.0.0
+  def list_func_groups
+    list_groups(list_organizational_units.select { |g| g.match?(/^OU=Functional/) }.first)
   end
 
   # Lists all permissions groups in the remote instance.
@@ -164,6 +174,7 @@ module AdGear::Infrastructure::GroupManager::LDAP
   def list_all_groups
     groups = {}
     groups.merge!(list_org_groups)
+    groups.merge!(list_func_groups)
     groups.merge!(list_perm_groups)
     groups.merge!(list_locations)
     groups

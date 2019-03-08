@@ -56,6 +56,8 @@ module AdGear::Infrastructure::GroupManager::Utils
   def find_ou(cn)
     if GLOBAL_CONFIG[:data][:organizational].key?(cn)
       'OU=Organizational, OU=Keycloak Groups'
+    GLOBAL_CONFIG[:data][:functional].key?(cn)
+      'OU=Functional, OU=Keycloak Groups'
     elsif GLOBAL_CONFIG[:data][:permissions].key?(cn)
       'OU=Permission, OU=Keycloak Groups'
     elsif GLOBAL_CONFIG[:data][:locations].key?(cn)
