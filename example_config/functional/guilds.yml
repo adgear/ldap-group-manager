@@ -1,0 +1,18 @@
+earth.release_managers:
+  description:
+    - Metateam for all the release managers
+  member:
+    - pao.release_managers
+    - yul.release_managers
+
+pao.release_managers:
+  description:
+    - Release mangers for Palo Alto
+  memeber:
+    - user_4
+
+yul.release_managers:
+  description:
+    - Release mangers for Palo Alto
+  memeber:
+    - user_1
