@@ -25,6 +25,7 @@ module AdGear
         GLOBAL_CONFIG[:ldap_host] = ENV['AG_LDAP_HOST']
         GLOBAL_CONFIG[:treebase] = ENV['AG_TREEBASE']
         GLOBAL_CONFIG[:local_state] = ENV['AG_LOCAL_STATE'] || Dir.pwd
+        GLOBAL_CONFIG[:settle_sleep] = ENV['AG_SETTLE_SLEEP'] || 15
 
         GLOBAL_CONFIG.freeze
         # rubocop:enable Style/MutableConstant

@@ -89,7 +89,7 @@ module AdGear
             )
           end
           if ops_to_perform[:create].any? && ops_to_perform[:modify].any?
-            sleep_time = 15
+            sleep_time = GLOBAL_CONFIG[:settle_sleep]
             sleep sleep_time
             Log.info("Waiting #{sleep_time} seconds for ldap to propagate changes after object creation")
           end
