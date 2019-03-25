@@ -88,6 +88,11 @@ module AdGear
               ["cn=#{cn}", Utils.find_ou(cn), GLOBAL_CONFIG[:treebase]].join(', ')
             )
           end
+          if ops_to_perform[:create].any? && ops_to_perform[:modify].any?
+            sleep_time = 15
+            sleep sleep_time
+            Log.info("Waiting #{sleep_time} seconds for ldap to propagate changes after object creation")
+          end
 
           Log.info("Applying #{ops_to_perform[:modify].length} modifications to existing items")
           ops_to_perform[:modify].each do |i|
