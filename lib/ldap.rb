@@ -51,6 +51,7 @@ module AdGear::Infrastructure::GroupManager::LDAP
   # Verifies that a given user exists.
   # @since 0.1.0
   def user_exists?(dn)
+    Log.debug("Verifying if user #{dn} exists")
     treebase = GLOBAL_CONFIG[:treebase]
 
     filter_string = ["distinguishedName=CN=#{dn}"]
@@ -58,7 +59,10 @@ module AdGear::Infrastructure::GroupManager::LDAP
     filter_string << treebase
 
     filter = Net::LDAP::Filter.construct("(#{filter_string.join(', ')})")
-    Binder.search(base: treebase, filter: filter).any?
+    result = Binder.search(base: treebase, filter: filter)
+    Log.trace("Dumping query inspect", data: result.inspect)
+    Log.trace("Dumping operation result", data: Binder.get_operation_result)
+    result.kind_of?(Array) && result.any?
   end
 
   # Modifies or creates an item.
