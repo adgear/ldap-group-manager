@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ldap-group-manager (1.2.0)
+    ldap-group-manager (1.2.1)
       awesome_print
       net-ldap (~> 0.16.1)
       ougai (~> 1.7)

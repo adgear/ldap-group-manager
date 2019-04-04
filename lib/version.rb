@@ -6,7 +6,7 @@ module AdGear
     module GroupManager
       module Version
         # The global constant holding the version of the gem.
-        GEM_VERSION = '1.2.0'.freeze
+        GEM_VERSION = '1.2.1'.freeze
       end
     end
   end
