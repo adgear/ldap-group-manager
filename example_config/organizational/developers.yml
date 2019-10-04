@@ -20,3 +20,8 @@ pao.developers:
   - user_4
   - user_5
   - user_6
+  - dn: user_7
+    # Be aware that dates _must_ be quoted
+    # otherwise the yaml parser will explode
+    not_before: '2019-10-03T15:44:11-04:00'
+    not_after:  '2019-12-01T00:00:00+00:00'
