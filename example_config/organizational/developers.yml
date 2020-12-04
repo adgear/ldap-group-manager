@@ -6,6 +6,8 @@ earth.developers:
     - yul.developers
 
 yul.developers:
+  managers:
+    - user_6
   description:
     - The most batman of all the teams
   member:

@@ -41,6 +41,23 @@ module AdGear
           Log.debug("target: #{target}")
           data = YAML.safe_load(File.read(file)) || {}
           GLOBAL_CONFIG[:data][target.to_sym].merge!(data)
+
+          # This block sanitizes the schema of incoming configuration to ignore any unknown keys
+          # It's the _"next best thing"_ short of casting the individual items onto a schema. ;_;
+          GLOBAL_CONFIG[:data].each do |type, _|
+            Log.debug("type" => type)
+            GLOBAL_CONFIG[:data][type].each do |group, _|
+              Log.debug("group" => group)
+              Log.debug(GLOBAL_CONFIG[:data][type][group])
+              unknown_keys = GLOBAL_CONFIG[:data][type][group].keys.reject { |k| [ 'description', 'member' ].include?(k) }
+
+              Log.debug(unknown_keys)
+              unknown_keys.each do |k|
+                GLOBAL_CONFIG[:data][type][group].delete(k)
+                Log.debug("deleted #{type}.#{group}.#{k}")
+              end
+            end
+          end
         end
 
         module_function

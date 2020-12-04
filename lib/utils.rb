@@ -73,7 +73,14 @@ module AdGear::Infrastructure::GroupManager::Utils
     ordered_groups = {}
     all_groups.keys.sort.each do |group|
       ordered_groups[group] = {}
-      all_groups[group].sort.map { |k, v| ordered_groups[group][k] = v }
+      begin
+        all_groups[group].sort.map { |k, v| ordered_groups[group][k] = v }
+      rescue => e
+        Log.debug(group)
+        Log.debug(all_groups[group])
+        Log.error(e)
+        exit(1)
+      end
       unless !all_groups[group].key?(:member) || all_groups[group][:member].nil?
         ordered_groups[group].delete(:member)
         ordered_groups[group][:member] = all_groups[group][:member].sort
