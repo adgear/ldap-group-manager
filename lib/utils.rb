@@ -67,11 +67,25 @@ module AdGear::Infrastructure::GroupManager::Utils
     end
   end
 
+  # Checks whether members of a group have duplicates
+  # @since 1.3.3
+  def check_duplicates(members, group)
+    if members
+      if members.uniq.length != members.length
+        duplicates = members.select{|element| members.count(element) > 1 }.uniq
+        Log.error("Found duplicate members within a group", group: group, duplicates: duplicates)
+        Log.fatal("A group may not declare the same member more than once")
+        exit(10)
+      end
+    end
+  end
+
   # Sorts the member array bundle of groups.
   # @since 0.1.0
   def sort_member(all_groups)
     ordered_groups = {}
     all_groups.keys.sort.each do |group|
+      check_duplicates(all_groups[group][:member], group)
       ordered_groups[group] = {}
       begin
         all_groups[group].sort.map { |k, v| ordered_groups[group][k] = v }
