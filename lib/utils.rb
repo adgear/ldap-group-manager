@@ -145,9 +145,17 @@ module AdGear::Infrastructure::GroupManager::Utils
     operations
   end
 
-  # A helper method that compares two objects, accounting for LDAP idiosyncracies.
+  # A helper method that compares two objects, accounting for LDAP idiosyncracies and ignoring case.
   # @since 0.1.0
   def compare_attributes(local, remote)
-    (local == [] ? nil : local) != remote
+    if local == nil then
+      local = []
+    end
+
+    if remote == nil then
+      remote = []
+    end
+
+    local.map{ |s| s.downcase } != remote.map{ |s| s.downcase }
   end
 end
